@@ -29,16 +29,12 @@ public class UserController {
     public ResponseEntity<List<UserDto>> listAll(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.listAll());
     }
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public String getUserTest(){
-        return "Get User Test";
+    @GetMapping("/listOrderByName")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<UserDto>> listOrderByName(){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.listOrderByName());
     }
 
-    @PostMapping("/admin")
-    public String adminTest(){
-        return "Admin Test";
-    }
 
 
 }

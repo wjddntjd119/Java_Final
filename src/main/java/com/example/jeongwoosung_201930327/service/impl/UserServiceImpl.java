@@ -1,6 +1,7 @@
 package com.example.jeongwoosung_201930327.service.impl;
 
 import com.example.jeongwoosung_201930327.dao.UserDAO;
+import com.example.jeongwoosung_201930327.dto.ProductResponseDto;
 import com.example.jeongwoosung_201930327.dto.UserDto;
 import com.example.jeongwoosung_201930327.entity.User;
 import com.example.jeongwoosung_201930327.service.UserService;
@@ -24,5 +25,23 @@ public class UserServiceImpl implements UserService {
         List<UserDto> userDAOList = userList.stream().map(
                 UserDto::new).collect(Collectors.toList());
         return userDAOList;
+    }
+
+    @Override
+    public List<UserDto> listOrderByName() {
+        List<User> userList = userDAO.listOrderByName();
+        List<UserDto> userDAOList = userList.stream().map(
+                UserDto::new).collect(Collectors.toList());
+        return userDAOList;
+    }
+
+    @Override
+    public ProductResponseDto changeProductName(Long number, String name) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void deleteProduct(Long number) throws Exception {
+
     }
 }

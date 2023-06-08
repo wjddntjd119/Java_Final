@@ -19,4 +19,9 @@ public class UserDAOImpl implements UserDAO {
     public List<User> listAll() {
         return userRepository.findAllBy();
     }
+
+    @Override
+    public List<User> listOrderByName() {
+        return userRepository.findAllByOrderByName();
+    }
 }

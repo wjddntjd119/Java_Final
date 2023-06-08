@@ -9,6 +9,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User getByUid(String uid);
 
     List<User> findAllBy();
-    List<User> findAllByOrderByNameAsc();
+    List<User> findAllByOrderByName();
+
 
 }
