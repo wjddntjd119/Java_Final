@@ -17,7 +17,6 @@ public interface ProductDAO {
 
     List<Product> listAllByOrderByPriceDesc();
 
-
     Product updateProductName(Long number, String name, int price, int stock) throws Exception;
 
     void deleteProduct(Long number) throws Exception;

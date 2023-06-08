@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 import java.util.List;
 
 @RestController
@@ -26,11 +28,13 @@ public class UserController {
 
     @GetMapping("/list")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "사용자 리스트 - ADMIN만 볼 수 있음", description = "")
     public ResponseEntity<List<UserDto>> listAll(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.listAll());
     }
     @GetMapping("/listOrderByName")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "사용자 리스트(이름순 정렬 - 오름차순) - ADMIN만 볼 수 있음", description = "")
     public ResponseEntity<List<UserDto>> listOrderByName(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.listOrderByName());
     }

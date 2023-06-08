@@ -56,8 +56,6 @@ public class ProductDAOImpl implements ProductDAO {
 
 
 
-
-
     @Override
     public Product updateProductName(Long number, String name, int price, int stock) throws Exception {
         Optional<Product> selectedProduct = productRepository.findById(number);
@@ -66,6 +64,8 @@ public class ProductDAOImpl implements ProductDAO {
         if(selectedProduct.isPresent()) {
             Product product = selectedProduct.get();
             product.setName(name);
+            product.setPrice(price);
+            product.setStock(stock);
             product.setUpdatedAt(LocalDateTime.now());
 
             updateProduct = productRepository.save(product);

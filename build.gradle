@@ -38,6 +38,8 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa:5.0.0'
     implementation 'com.querydsl:querydsl-apt:5.0.0'
 
+    implementation 'io.swagger.core.v3:swagger-annotations:2.1.11'
+
     
 }
 
