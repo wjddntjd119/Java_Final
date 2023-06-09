@@ -53,7 +53,7 @@ public class BoardController {
 
 
     @PostMapping()
-    @PreAuthorize("hasRoles('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @Operation(summary = "게시글 등록 - USER or ADMIN 권한이 있어야 등록가능", description = "")
     public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardDto boardDto,Principal principal) {
         String tokenUserId = principal.getName();
