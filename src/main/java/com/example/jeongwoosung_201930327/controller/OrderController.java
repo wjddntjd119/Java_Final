@@ -3,6 +3,7 @@ package com.example.jeongwoosung_201930327.controller;
 import com.example.jeongwoosung_201930327.dto.OrderDto;
 import com.example.jeongwoosung_201930327.dto.OrderResponseDto;
 import com.example.jeongwoosung_201930327.dto.ProductDto;
+import com.example.jeongwoosung_201930327.dto.ProductResponseDto;
 import com.example.jeongwoosung_201930327.entity.Product;
 import com.example.jeongwoosung_201930327.service.OrderService;
 import com.example.jeongwoosung_201930327.service.ProductService;
@@ -55,7 +56,7 @@ public class OrderController {
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "주문(구매)등록 - USER만 등록", description = "")
-    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderDto orderDto) throws Exception {
         Product product = productService.getProductById(orderDto.getProduct_id());
         if (product == null || product.getStock() == 0) {
             OrderResponseDto responseDto = new OrderResponseDto();
@@ -64,8 +65,8 @@ public class OrderController {
         }
         if (Long.parseLong(orderDto.getProduct_id()) == product.getNumber() && product.getStock() > 0) {
             product.setStock(product.getStock() - 1);
-            ProductDto productDto = new ProductDto(product.getName(),product.getPrice(),product.getStock());
-            productService.saveProduct(productDto);
+            ProductResponseDto productResponseDto = new ProductResponseDto(product.getNumber(),product.getName(),product.getPrice(),product.getStock());
+            productService.changeProductName(product.getNumber(),product.getName(),product.getPrice(),product.getStock());
         }
 
         OrderResponseDto orderResponseDto = orderService.saveOrder(orderDto);
