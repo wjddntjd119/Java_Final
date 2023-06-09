@@ -7,13 +7,12 @@ public class ChangeBoardDto {
     private String title;
 
     private String contents;
-    private LocalDateTime updatedAt;
 
-    public ChangeBoardDto(long id, String title, String contents, LocalDateTime updatedAt) {
+
+    public ChangeBoardDto(long id, String title, String contents) {
         this.id = id;
         this.title = title;
         this.contents = contents;
-        this.updatedAt = updatedAt;
     }
 
     public long getId() {
@@ -40,13 +39,6 @@ public class ChangeBoardDto {
         this.contents = contents;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     public ChangeBoardDto() {}
 }

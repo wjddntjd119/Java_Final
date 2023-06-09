@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
+    Board findById(long id);
     List<Board> findByUserId(String name);
     List<Board> findAllByOrderByCreatedAtDesc();
     List<Board> findAllBy();

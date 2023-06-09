@@ -21,4 +21,5 @@ public interface BoardDAO {
 
     //작성자를 통해 가져오기
     List<Board> listBoardByName(String user_name);
+    Board getBoardUserId(long id);
 }

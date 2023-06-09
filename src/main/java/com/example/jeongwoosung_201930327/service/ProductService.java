@@ -2,6 +2,7 @@ package com.example.jeongwoosung_201930327.service;
 
 import com.example.jeongwoosung_201930327.dto.ProductDto;
 import com.example.jeongwoosung_201930327.dto.ProductResponseDto;
+import com.example.jeongwoosung_201930327.entity.Product;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public interface ProductService {
 
     List<ProductResponseDto> listProductByName(String name);
 
+    Product getProductById(String productId);
 
     ProductResponseDto saveProduct(ProductDto productDto);
 

@@ -8,12 +8,14 @@ import com.example.jeongwoosung_201930327.dto.ProductResponseDto;
 import java.util.List;
 
 public interface BoardService {
+    String getBoardUserId(long id);
+
     BoardResponseDto getBoard(long id);
 
     List<BoardResponseDto> listBoardByName(String name);
 
 
-    BoardResponseDto saveBoard(BoardDto boardDto);
+    BoardResponseDto saveBoard(BoardDto boardDto, String token);
 
     List<BoardResponseDto> listAll();
 

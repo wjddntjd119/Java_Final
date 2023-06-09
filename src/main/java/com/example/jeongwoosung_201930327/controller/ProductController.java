@@ -24,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    @Operation(summary = "상품 정보 - 아이디를 통해 가져오기", description = "")
+    @Operation(summary = "상품 정보 - 아이디를 통해 가져오기 ", description = "")
     public ResponseEntity<ProductResponseDto> getProduct(Long number) {
         ProductResponseDto productResponseDto = productService.getProduct(number);
         return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
@@ -50,6 +50,7 @@ public class ProductController {
 
 
     @PostMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "상품 등록 - ADMIN만", description = "")
     public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductDto productDto) {
         ProductResponseDto productResponseDto = productService.saveProduct(productDto);
@@ -57,6 +58,7 @@ public class ProductController {
     }
 
     @PutMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "상품 수정 - 상품명, 가격, 재고 수정 가능, ADMIN만", description = "")
     public ResponseEntity<ProductResponseDto> changeProductName(@RequestBody ChangeProductDto changeProductDto) throws Exception{
         ProductResponseDto productResponseDto = productService.changeProductName(changeProductDto.getNumber(), changeProductDto.getName(), changeProductDto.getPrice(), changeProductDto.getStock());
@@ -64,6 +66,7 @@ public class ProductController {
     }
 
     @DeleteMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "상품 삭제 - ADMIN만", description = "")
     public ResponseEntity<String> deleteProduct(Long number) throws Exception{
         productService.deleteProduct(number);

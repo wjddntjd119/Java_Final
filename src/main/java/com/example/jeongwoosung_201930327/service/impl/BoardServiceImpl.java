@@ -1,5 +1,6 @@
 package com.example.jeongwoosung_201930327.service.impl;
 
+import com.example.jeongwoosung_201930327.config.security.JwtTokenProvider;
 import com.example.jeongwoosung_201930327.dao.BoardDAO;
 import com.example.jeongwoosung_201930327.dao.ProductDAO;
 import com.example.jeongwoosung_201930327.dto.BoardDto;
@@ -9,6 +10,8 @@ import com.example.jeongwoosung_201930327.entity.Board;
 import com.example.jeongwoosung_201930327.entity.Product;
 import com.example.jeongwoosung_201930327.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,10 +21,26 @@ import java.util.stream.Collectors;
 @Service
 public class BoardServiceImpl implements BoardService {
     private final BoardDAO boardDAO;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public BoardServiceImpl(BoardDAO boardDAO) {
+    public BoardServiceImpl(BoardDAO boardDAO, JwtTokenProvider jwtTokenProvider) {
         this.boardDAO = boardDAO;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    private String getUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName(); // userId가 사용자의 이름으로 저장되어 있는 경우
+
+
+        return userId;
+    }
+
+    @Override
+    public String getBoardUserId(long id) {
+        Board board = boardDAO.getBoardUserId(id);
+        return board.getUserId();
     }
 
     @Override
@@ -46,11 +65,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardResponseDto saveBoard(BoardDto boardDto) {
+    public BoardResponseDto saveBoard(BoardDto boardDto, String userId) {
         Board board = new Board();
         board.setTitle(boardDto.getTitle());
         board.setContents(boardDto.getContents());
-        ////////////////////////////////여기 id랑 이름 입력하는 방법 찾아보기
+        board.setUserName(boardDto.getUser_name());
+        board.setUserId(userId);
         board.setCreatedAt(LocalDateTime.now());
         board.setUpdatedAt(LocalDateTime.now());
 
@@ -59,7 +79,8 @@ public class BoardServiceImpl implements BoardService {
         BoardResponseDto boardResponseDto = new BoardResponseDto();
         boardResponseDto.setTitle(saveBoard.getTitle());
         boardResponseDto.setContents(saveBoard.getContents());
-        ////////////////////////////////여기 id랑 이름 입력하는 방법 찾아보기
+        boardResponseDto.setUser_name(saveBoard.getUserName());
+        boardResponseDto.setUser_id(userId);
 
         return boardResponseDto;
     }

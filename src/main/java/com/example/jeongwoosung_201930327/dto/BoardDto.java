@@ -11,13 +11,11 @@ import lombok.Setter;
 public class BoardDto {
     private String contents;
     private String title;
-    private  String user_id;
     private  String user_name;
 
     public BoardDto(Board board){
         this.contents = board.getContents();
         this.title = board.getTitle();
-        this.user_id = board.getUserId();
         this.user_name = board.getUserName();
     }
 

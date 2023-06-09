@@ -26,6 +26,7 @@ public class BoardDAOImpl implements BoardDAO {
 
     }
 
+
     @Override
     public Board insertBoard(Board board) {
         Board saveBoard = boardRepository.save(board);
@@ -40,27 +41,26 @@ public class BoardDAOImpl implements BoardDAO {
 
     @Override
     public Board updateBoard(long id, String title, String contents) throws Exception {
-        Optional<Board> selectedBoard = boardRepository.findById(id);
+        Board selectedBoard = boardRepository.findById(id);
 
         Board updateBoard;
-        if(selectedBoard.isPresent()) {
-            Board board = selectedBoard.get();
-            board.setTitle(title);
-            board.setContents(contents);
-            board.setUpdatedAt(LocalDateTime.now());
+        if(selectedBoard != null) {
 
-            updateBoard = boardRepository.save(board);
+            selectedBoard.setTitle(title);
+            selectedBoard.setContents(contents);
+            selectedBoard.setUpdatedAt(LocalDateTime.now());
+
+            updateBoard = boardRepository.save(selectedBoard);
         } else throw new Exception();
         return updateBoard;
     }
 
     @Override
     public void deleteBoard(long id) throws Exception {
-        Optional<Board> selectedBoard = boardRepository.findById(id);
+        Board selectedBoard = boardRepository.findById(id);
 
-        if(selectedBoard.isPresent()) {
-            Board board = selectedBoard.get();
-            boardRepository.delete(board);
+        if(selectedBoard != null) {
+            boardRepository.delete(selectedBoard);
         } else throw new Exception();
     }
 
@@ -77,5 +77,11 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public List<Board> listBoardByName(String user_name) {
         return boardRepository.findByUserId(user_name);
+    }
+
+    //boardID 값으로 UsrId 찾기
+    @Override
+    public Board getBoardUserId(long id) {
+        return boardRepository.findById(id);
     }
 }
